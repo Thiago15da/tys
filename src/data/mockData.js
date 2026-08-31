@@ -18,20 +18,38 @@
  * 1. LAS DOS FECHAS
  * ----------------------------------------------------------------------- */
 
-/** El primer beso: martes 19 de mayo de 2026, a la salida del trabajo.
- *  ⚠️ Está en medianoche porque no sé la hora. Como el reloj muestra horas y
- *  minutos, poné la hora real de la salida — ej: "2026-05-19T17:30:00". */
-export const START_DATE = "2026-05-19T00:00:00";
+/** El primer beso: martes 19 de mayo de 2026, 16:30, a la salida del trabajo. */
+export const START_DATE = "2026-05-19T16:30:00";
 
 /** El día que Sol dice que sí.
- *  ⚠️⚠️ CAMBIAR SÍ O SÍ por el día y la hora exactos en que le vas a dar la
- *  carta. Mientras la fecha esté en el futuro, ese contador muestra el mensaje
- *  de "todavía no arrancó" en vez de números — así que si te equivocás por
- *  arriba, no se rompe nada, pero tampoco cuenta. */
-export const NOVIOS_DATE = "2026-09-06T20:00:00";
+ *
+ *  ⚠️⚠️ ESTO HAY QUE CAMBIARLO ANTES DE DARLE LA CARTA.
+ *
+ *  Está puesto a dos semanas vista como marcador. Cuando sepas el día y la
+ *  hora, cambialo por los reales.
+ *
+ *  Está a propósito puesto tarde y no temprano: mientras la fecha esté en el
+ *  futuro el contador muestra "Este arranca cuando digas que sí", que se lee
+ *  lindo igual. Si quedara en el pasado, en cambio, mostraría días contados
+ *  desde una fecha equivocada, que es mucho peor. */
+export const NOVIOS_DATE = "2026-09-14T20:00:00";
 
 /* --------------------------------------------------------------------------
- * 2. LA PORTADA
+ * 2. LA ENTRADA
+ * Lo que aparece mientras carga, y la invitación a entrar.
+ *
+ * Ese toque no es un capricho de diseño: ningún navegador deja que una página
+ * arranque sonando sola. Necesita un gesto de quien la abre, y ese toque es
+ * el gesto. Sin él la música no sonaría nunca.
+ * ----------------------------------------------------------------------- */
+export const introContent = {
+  eyebrow: "Para Sol",
+  enter: "Tocá para entrar",
+  hint: "Con sonido",
+};
+
+/* --------------------------------------------------------------------------
+ * 3. LA PORTADA
  * ----------------------------------------------------------------------- */
 export const heroContent = {
   eyebrow: "Para Sol",
@@ -42,7 +60,7 @@ export const heroContent = {
 };
 
 /* --------------------------------------------------------------------------
- * 3. LA MÚSICA
+ * 4. LA MÚSICA
  * ⚠️ Falta el archivo: guardalo como public/audio/es-verdad.mp3
  * Hasta entonces el reproductor se ve igual pero no suena.
  * ----------------------------------------------------------------------- */
@@ -56,7 +74,7 @@ export const audioTrack = {
 };
 
 /* --------------------------------------------------------------------------
- * 4. LOS CAPÍTULOS
+ * 5. LOS CAPÍTULOS
  *
  * Ocho piezas: seis tarjetas y dos frases sueltas que cortan el ritmo.
  * El arco es subida → caída → remontada: si sacás el lunes que desapareció,
@@ -145,11 +163,13 @@ export const storyChapters = [
     stamp: "Ese día, a la salida",
     kicker: "El papelito",
     title: "No me lo dijiste. Me lo escribiste.",
-    /* ⚠️ Poné acá, más o menos, lo que decía el papel. No lo invento yo:
-       si las palabras no son las de ella, se nota al toque. */
-    note: "[lo que decía el papelito]",
+    /* El papelito se dibuja CERRADO: se ve el papel doblado y la tinta
+       marcándose del otro lado, pero no se lee. Lo que decía es de ustedes.
+       Si algún día quisieras mostrarlo, se cambia por:
+         note: { text: "lo que decía" },  */
+    note: { sealed: true },
     body: [
-      "Me pasaste un papel doblado. Ahí adentro estaba, más o menos, que yo te gustaba.",
+      "Me pasaste un papel doblado. Ahí adentro estaba, más o menos, que yo te gustaba. Lo que decía exactamente queda entre nosotros dos.",
       "Y yo, que hacía seis días que no pensaba en otra cosa, me quedé sin saber qué hacer. Me puse nervioso como un nene.",
     ],
     accent: "rose",
@@ -185,7 +205,7 @@ export const storyChapters = [
 ];
 
 /* --------------------------------------------------------------------------
- * 5. LAS FOTOS — lo que vino después
+ * 6. LAS FOTOS — lo que vino después
  *
  * Las fotos ya están procesadas en public/fotos/: enderezadas, achicadas para
  * que carguen rápido y SIN metadatos (las del celular traen las coordenadas
@@ -220,7 +240,7 @@ export const photos = [
 ];
 
 /* --------------------------------------------------------------------------
- * 6. LA CANCIÓN
+ * 7. LA CANCIÓN
  *
  * El corazón de la página. La letra habla de un "río de casualidades" y la
  * historia de arriba ES una cadena de casualidades: el cambio de turno, la
@@ -242,8 +262,6 @@ export const songContent = {
     "simplemente eres tú.",
   ],
   track: "Es verdad · Daniel, me estás matando",
-  play: "Escucharla",
-  playing: "Sonando",
   reflection: [
     "«Río de casualidades». Eso fue exactamente lo que nos pasó: pedí cambio de turno dos veces, te fuiste un lunes y volviste un martes, y nada de eso estaba planeado.",
     "En estos meses me hiciste crecer más de lo que crecí en años, y me hiciste sentir querido de una forma que no conocía. Nunca quise a nadie así.",
@@ -253,7 +271,7 @@ export const songContent = {
 };
 
 /* --------------------------------------------------------------------------
- * 7. RELOJ UNO — desde el primer beso
+ * 8. RELOJ UNO — desde el primer beso
  * ----------------------------------------------------------------------- */
 export const counterContent = {
   variant: "full",
@@ -271,7 +289,7 @@ export const counterContent = {
 };
 
 /* --------------------------------------------------------------------------
- * 8. RELOJ DOS — desde que son novios
+ * 9. RELOJ DOS — desde que son novios
  * Arranca en cero el día que ella diga que sí. `pending` es lo que muestra
  * mientras esa fecha todavía no llegó.
  * ----------------------------------------------------------------------- */
@@ -292,7 +310,7 @@ export const noviosCounterContent = {
 };
 
 /* --------------------------------------------------------------------------
- * 9. EL CAPÍTULO BLOQUEADO
+ * 10. EL CAPÍTULO BLOQUEADO
  * El título se ve borroneado a propósito: se adivina, no se lee.
  * Al tocarlo tiembla y aparece `denied`.
  * ----------------------------------------------------------------------- */
@@ -306,7 +324,7 @@ export const lockedContent = {
 };
 
 /* --------------------------------------------------------------------------
- * 10. EL CIERRE
+ * 11. EL CIERRE
  * ----------------------------------------------------------------------- */
 export const footerContent = {
   signature: "Thiago",
@@ -314,7 +332,7 @@ export const footerContent = {
 };
 
 /* --------------------------------------------------------------------------
- * 11. EL SECRETO
+ * 12. EL SECRETO
  * Se abre tecleando BANQUITO, o manteniendo apretado 1,6s el puntito dorado
  * del final (la única forma en un celular, donde no hay teclado).
  * ----------------------------------------------------------------------- */

@@ -137,9 +137,16 @@ export function AudioProvider({ track, children }) {
     const started = performance.now();
 
     const step = (now) => {
-      const t = Math.min((now - started) / RAMP_MS, 1);
+      // El piso del clamp no sobra: el reloj que recibe requestAnimationFrame
+      // marca el arranque del cuadro, y los eventos se despachan DENTRO de ese
+      // cuadro. O sea que `now` puede ser ANTERIOR al performance.now() que
+      // tomamos en el handler del toque. Con t negativo, easeOutCubic devuelve
+      // un valor negativo, y asignarle un volumen negativo al audio lanza una
+      // excepción que corta el fundido (pasaba al entrar y también al abrir el
+      // easter egg, que es el otro lugar donde esto se llama desde un click).
+      const t = Math.min(Math.max((now - started) / RAMP_MS, 0), 1);
       const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
-      audio.volume = from + (to - from) * eased;
+      audio.volume = Math.min(Math.max(from + (to - from) * eased, 0), 1);
       if (t < 1) rampRef.current = requestAnimationFrame(step);
     };
     rampRef.current = requestAnimationFrame(step);
@@ -160,6 +167,29 @@ export function AudioProvider({ track, children }) {
         progress.set(clamped);
         setDisplayTime(seconds);
         if (audioRef.current && !simulated) audioRef.current.currentTime = seconds;
+      },
+
+      /**
+       * Arranca la música desde el gesto que la pidió.
+       *
+       * Los navegadores exigen que `play()` salga de un toque real del
+       * usuario, y sólo cuentan la llamada si ocurre DENTRO del handler del
+       * evento — no en un efecto que corre después. Por eso acá se llama al
+       * elemento de audio directo en vez de pasar por el estado de React,
+       * que recién reaccionaría en el siguiente render y ya sería tarde
+       * (Safari es el más estricto con esto).
+       *
+       * Entra con el volumen en cero y sube: la música aparece como una
+       * marea, no como un portazo.
+       */
+      unlock: () => {
+        const audio = audioRef.current;
+        if (!audio) return;
+        audio.volume = 0;
+        const attempt = audio.play();
+        if (attempt?.catch) attempt.catch(() => setSimulated(true));
+        setPlaying(true);
+        rampVolume(track.volume ?? 0.6);
       },
 
       /** Baja el volumen (easter egg desbloqueado). */

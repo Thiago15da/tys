@@ -24,6 +24,7 @@ import {
   counterContent,
   footerContent,
   heroContent,
+  introContent,
   lockedContent,
   noviosCounterContent,
   photoWallContent,
@@ -46,7 +47,7 @@ function Experience() {
   const [secretOpen, setSecretOpen] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
   const timelineRef = useRef(null);
-  const { duck, restore } = useAudioControls();
+  const { duck, restore, unlock } = useAudioControls();
 
   /* --------------------------------------------------- bloqueo de scroll */
   useEffect(() => {
@@ -85,7 +86,14 @@ function Experience() {
       <ScrollProgress />
 
       <AnimatePresence>
-        {loading && <Preloader key="preloader" onComplete={() => setLoading(false)} />}
+        {loading && (
+          <Preloader
+            key="preloader"
+            content={introContent}
+            onEnter={unlock}
+            onComplete={() => setLoading(false)}
+          />
+        )}
       </AnimatePresence>
 
       {/* El contenido entra recién cuando el preloader terminó: así el

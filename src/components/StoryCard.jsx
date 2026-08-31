@@ -105,7 +105,7 @@ export default function StoryCard({ chapter, index }) {
             />
 
             {chapter.media?.src && <CardMedia media={chapter.media} progress={scrollYProgress} />}
-            {chapter.note && <PaperNote text={chapter.note} />}
+            {chapter.note && <PaperNote note={chapter.note} />}
 
             <header className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
               <time className="text-[0.58rem] font-light uppercase tracking-[0.32em] text-ash">
@@ -142,17 +142,50 @@ export default function StoryCard({ chapter, index }) {
 }
 
 /**
- * El papelito doblado.
+ * El papelito.
  *
- * Es el objeto que cambia la historia, así que no puede ser una cita más en
- * cursiva: tiene que sentirse como un papel real apoyado sobre la tarjeta.
- * De ahí el papel color hueso (nunca blanco puro), la rotación de 2,5°, el
- * pliegue horizontal en el medio y la sombra proyectada.
+ * Es el objeto que cambia la historia, así que no podía ser una cita en
+ * cursiva más: tiene que sentirse como un papel de verdad apoyado sobre la
+ * tarjeta. De ahí el papel color hueso (nunca blanco puro), la rotación, el
+ * pliegue marcado al medio y la sombra proyectada.
  *
- * Entra con un rebote corto, como algo que te acaban de pasar en la mano.
+ * Viene en dos estados:
+ *
+ *   · sealed → cerrado. Se ve la tinta marcándose desde el otro lado del
+ *     papel, borrosa y espejada, como pasa de verdad cuando alguien escribe
+ *     fuerte sobre una hoja fina. Se nota que hay algo escrito y no se puede
+ *     leer. Ese trazo son curvas dibujadas a mano en SVG: no hay ningún texto
+ *     real escondido ahí, ni siquiera oculto en el código.
+ *
+ *   · text → abierto, con lo que decía.
+ *
+ * Cerrado es mejor de lo que parece: un papel que no se puede leer pica más
+ * que uno que se lee, y además lo que decía es de ellos dos.
  */
-function PaperNote({ text }) {
+
+/** Trazos de tinta: curvas sueltas que sugieren renglones escritos a mano. */
+function InkBleed() {
+  return (
+    <svg
+      viewBox="0 0 200 90"
+      className="h-full w-full"
+      fill="none"
+      stroke="#3d3527"
+      strokeWidth="2.1"
+      strokeLinecap="round"
+      aria-hidden="true"
+    >
+      <path d="M24 20c14-7 26 5 38-1s20-9 31-3 22 2 33-4" />
+      <path d="M18 40c17-6 24 6 39 1s26-8 38-2 24 0 34-5" />
+      <path d="M27 60c12-5 22 6 35 1s24-7 35-2 20 1 29-4" />
+      <path d="M31 78c10-4 19 4 29 0s18-5 26-2" />
+    </svg>
+  );
+}
+
+function PaperNote({ note }) {
   const reduced = useReducedMotion();
+  const sealed = !note.text;
 
   return (
     <motion.div
@@ -177,9 +210,22 @@ function PaperNote({ text }) {
         aria-hidden="true"
       />
 
-      <p className="relative text-center font-script text-[1.6rem] leading-[1.35] text-[#3d3527]">
-        {text}
-      </p>
+      {sealed ? (
+        <div className="relative h-[104px]">
+          {/* La tinta del otro lado: espejada, borrosa, ilegible. */}
+          <span
+            className="pointer-events-none absolute inset-0 opacity-[0.17]"
+            style={{ transform: "scaleX(-1)", filter: "blur(1.6px)" }}
+            aria-hidden="true"
+          >
+            <InkBleed />
+          </span>
+        </div>
+      ) : (
+        <p className="relative text-center font-script text-[1.6rem] leading-[1.35] text-[#3d3527]">
+          {note.text}
+        </p>
+      )}
     </motion.div>
   );
 }

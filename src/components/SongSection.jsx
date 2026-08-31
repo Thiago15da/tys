@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { useAudioControls, useAudioState } from "../lib/AudioEngine";
 
 /**
  * La canción.
@@ -13,8 +12,8 @@ import { useAudioControls, useAudioState } from "../lib/AudioEngine";
  * atraviesa la sección de arriba abajo, con una gota cayendo en loop — el mismo
  * gesto del indicador del hero, cerrando el círculo.
  *
- * El botón de play engancha con el reproductor flotante: se lee la letra y se
- * escucha la canción sin salir de acá.
+ * No lleva botón de reproducir: la canción ya viene sonando desde que se entró
+ * a la página. Acá sólo se la nombra.
  */
 
 /** Riel por donde cae la luz. */
@@ -33,34 +32,7 @@ function LightRail({ flip = false }) {
   );
 }
 
-function PlayIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-3 w-3 translate-x-px" fill="currentColor" aria-hidden="true">
-      <path d="M8 5.14v13.72a.6.6 0 0 0 .92.5l10.5-6.86a.6.6 0 0 0 0-1L8.92 4.64a.6.6 0 0 0-.92.5Z" />
-    </svg>
-  );
-}
-
-function WaveIcon() {
-  return (
-    <span className="flex h-3 items-end gap-[2px]" aria-hidden="true">
-      {[0.7, 0.95, 0.62].map((d, i) => (
-        <motion.span
-          key={i}
-          className="w-[2px] rounded-full bg-current"
-          animate={{ height: [4, 11, 5] }}
-          transition={{ duration: d, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
-          style={{ height: 4 }}
-        />
-      ))}
-    </span>
-  );
-}
-
 export default function SongSection({ content }) {
-  const { play } = useAudioControls();
-  const { playing } = useAudioState();
-
   return (
     <section className="relative px-6 py-24 sm:py-32">
       <div className="mx-auto flex w-full max-w-lg flex-col items-center text-center">
@@ -124,23 +96,16 @@ export default function SongSection({ content }) {
           ))}
         </motion.blockquote>
 
-        {/* Escucharla */}
-        <motion.button
-          type="button"
-          onClick={play}
-          disabled={playing}
-          className="mt-11 flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.03] py-2.5 pl-4 pr-5 text-[0.62rem] font-light uppercase tracking-[0.28em] text-mist transition-colors duration-500 hover:border-gold/30 hover:text-bone disabled:cursor-default"
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
+        {/* Ya viene sonando desde que entró: acá sólo se nombra. */}
+        <motion.span
+          className="mt-10 font-serif text-[0.86rem] italic text-ash"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-10%" }}
-          transition={{ duration: 0.9, delay: 0.5 }}
-          whileTap={{ scale: 0.97 }}
+          transition={{ duration: 1, delay: 0.4 }}
         >
-          <span className="text-gold">{playing ? <WaveIcon /> : <PlayIcon />}</span>
-          {playing ? content.playing : content.play}
-        </motion.button>
-
-        <span className="mt-4 font-serif text-[0.82rem] italic text-ash">{content.track}</span>
+          {content.track}
+        </motion.span>
 
         <div className="mt-12">
           <LightRail />
