@@ -227,16 +227,16 @@ export const photoWallContent = {
 };
 
 export const photos = [
-  { src: "fotos/01-beso.jpg", alt: "Sol y Thiago", w: 825, h: 1100 },
-  { src: "fotos/02-noche.jpg", alt: "Sol y Thiago", w: 825, h: 1100 },
-  { src: "fotos/03-tarde.jpg", alt: "Sol y Thiago", w: 825, h: 1100 },
-  { src: "fotos/04-parque.jpg", alt: "Sol y Thiago", w: 825, h: 1100 },
-  { src: "fotos/05-flores.jpg", alt: "Sol y Thiago", w: 825, h: 1100 },
-  { src: "fotos/06-lucecitas.jpg", alt: "Sol y Thiago", w: 619, h: 1100 },
-  { src: "fotos/07-el-lugar.jpg", alt: "El lugar", w: 825, h: 1100 },
-  { src: "fotos/08-el-auto.jpg", alt: "Las flores en el auto", w: 825, h: 1100 },
-  { src: "fotos/09-paraguay.jpg", alt: "Sol y Thiago", w: 825, h: 1100 },
-  { src: "fotos/10-en-casa.jpg", alt: "Sol y Thiago", w: 619, h: 1100 },
+  { src: "fotos/01-beso.jpg", alt: "Sol y Thiago", w: 480, h: 640 },
+  { src: "fotos/02-noche.jpg", alt: "Sol y Thiago", w: 480, h: 640 },
+  { src: "fotos/03-tarde.jpg", alt: "Sol y Thiago", w: 480, h: 640 },
+  { src: "fotos/04-parque.jpg", alt: "Sol y Thiago", w: 480, h: 640 },
+  { src: "fotos/05-flores.jpg", alt: "Sol y Thiago", w: 480, h: 640 },
+  { src: "fotos/06-lucecitas.jpg", alt: "Sol y Thiago", w: 360, h: 640 },
+  { src: "fotos/07-el-lugar.jpg", alt: "El lugar", w: 480, h: 640 },
+  { src: "fotos/08-el-auto.jpg", alt: "Las flores en el auto", w: 480, h: 640 },
+  { src: "fotos/09-paraguay.jpg", alt: "Sol y Thiago", w: 480, h: 640 },
+  { src: "fotos/10-en-casa.jpg", alt: "Sol y Thiago", w: 360, h: 640 },
 ];
 
 /* --------------------------------------------------------------------------
@@ -310,29 +310,22 @@ export const noviosCounterContent = {
 };
 
 /* --------------------------------------------------------------------------
- * 10. EL CAPÍTULO BLOQUEADO
- * El título se ve borroneado a propósito: se adivina, no se lee.
- * Al tocarlo tiembla y aparece `denied`.
- * ----------------------------------------------------------------------- */
-export const lockedContent = {
-  eyebrow: "Capítulo tres",
-  redacted: "La boda",
-  title: "Todavía no se puede abrir",
-  body: "Este capítulo ya está escrito. Falta la fecha, nada más.",
-  denied: "Todavía no, Sol. Pero va a llegar.",
-  stamp: "— · — · ——",
-};
-
-/* --------------------------------------------------------------------------
- * 11. EL CIERRE
+ * 10. EL CIERRE
+ *
+ * `sealedWord` es la palabra que se insinúa detrás del candadito del pie, al
+ * lado de la firma. No se lee: aparece desenfocada un segundo y se va. Nada
+ * en la página la nombra ni la explica, y quien no toque el candado ni se
+ * entera de que estaba ahí. Poné null si preferís sacarlo del todo.
  * ----------------------------------------------------------------------- */
 export const footerContent = {
+  closing: "Esto es todo lo que pasó. Lo que sigue te lo digo yo, en persona.",
   signature: "Thiago",
   hint: "Hay algo escondido acá.",
+  sealedWord: "La boda",
 };
 
 /* --------------------------------------------------------------------------
- * 12. EL SECRETO
+ * 11. EL SECRETO
  * Se abre tecleando BANQUITO, o manteniendo apretado 1,6s el puntito dorado
  * del final (la única forma en un celular, donde no hay teclado).
  * ----------------------------------------------------------------------- */

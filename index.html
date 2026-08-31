@@ -14,12 +14,16 @@
     <meta name="googlebot" content="noindex, nofollow" />
     <meta name="referrer" content="no-referrer" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..600&family=Inter:wght@300;400;500;600&family=Parisienne&display=swap"
-      rel="stylesheet"
-    />
+    <!--
+      Las fuentes NO se piden a Google.
+
+      Una <link rel="stylesheet"> a un dominio ajeno bloquea el pintado: hasta
+      que esa hoja no baja, la pantalla queda en blanco. Medido acá, con la red
+      lenta, eran 12,7 segundos de pantalla negra antes de que apareciera nada.
+
+      Ahora viajan dentro del proyecto (ver src/index.css). Cero pedidos a
+      terceros, cero bloqueo, y funcionan aunque Google esté lento.
+    -->
 
     <title>Seis días de mayo</title>
   </head>

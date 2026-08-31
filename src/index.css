@@ -1,3 +1,12 @@
+/* Fuentes locales, sólo el subconjunto latino (alcanza de sobra para el
+   castellano, tildes y eñes incluidas) y sólo los pesos que se usan.
+   Van primero para que el navegador las pida cuanto antes. */
+@import "@fontsource/playfair-display/latin-400.css";
+@import "@fontsource/playfair-display/latin-400-italic.css";
+@import "@fontsource/inter/latin-300.css";
+@import "@fontsource/inter/latin-400.css";
+@import "@fontsource/parisienne/latin-400.css";
+
 @import "tailwindcss";
 
 /* ============================================================================
@@ -164,8 +173,11 @@
     rgb(255 255 255 / 0.02) 55%,
     rgb(255 255 255 / 0.035) 100%
   );
-  backdrop-filter: blur(22px) saturate(140%);
-  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  /* 22px de desenfoque se veía apenas mejor y costaba bastante más: el
+     backdrop-filter es de lo más caro que hay en un GPU de celular, y en la
+     página hay ocho tarjetas de estas. A 12px no se nota la diferencia. */
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
   border: 1px solid rgb(255 255 255 / 0.08);
   box-shadow:
     0 1px 0 0 rgb(255 255 255 / 0.06) inset,
@@ -176,8 +188,8 @@
 /* Variante más densa para elementos flotantes sobre contenido */
 @utility glass-dense {
   background: linear-gradient(145deg, rgb(20 20 27 / 0.78) 0%, rgb(10 10 14 / 0.72) 100%);
-  backdrop-filter: blur(28px) saturate(150%);
-  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
   border: 1px solid rgb(255 255 255 / 0.1);
   box-shadow:
     0 1px 0 0 rgb(255 255 255 / 0.07) inset,

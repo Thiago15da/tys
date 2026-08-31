@@ -22,48 +22,56 @@ export default function Preloader({ content, onEnter, onComplete }) {
   const [exiting, setExiting] = useState(false);
   const readyRef = useRef(false);
 
-  /* Señal real de "ya cargó": fuentes tipográficas + window.load */
+  /* Señal de "ya está listo": sólo las fuentes.
+     Antes esperaba además a window.load, que no se dispara hasta que bajó
+     TODO —imágenes incluidas—, y eso ataba la portada a diez fotos que ni
+     siquiera se ven al principio. */
   useEffect(() => {
-    let cancelled = false;
-    const markReady = () => {
-      if (!cancelled) readyRef.current = true;
+    let cancelado = false;
+    const listo = () => {
+      if (!cancelado) readyRef.current = true;
     };
 
-    const fonts = document.fonts?.ready ?? Promise.resolve();
-    const windowLoad =
-      document.readyState === "complete"
-        ? Promise.resolve()
-        : new Promise((resolve) => window.addEventListener("load", resolve, { once: true }));
-
-    Promise.all([fonts, windowLoad]).then(markReady);
-    // Red de seguridad: nunca dejamos a nadie atrapado en la pantalla de carga.
-    const failsafe = setTimeout(markReady, 4200);
+    (document.fonts?.ready ?? Promise.resolve()).then(listo);
+    const red = setTimeout(listo, 2200); // nunca dejar a nadie esperando
 
     return () => {
-      cancelled = true;
-      clearTimeout(failsafe);
+      cancelado = true;
+      clearTimeout(red);
     };
   }, []);
 
-  /* La curva */
+  /* La curva.
+     Va atada al reloj de pared y NO a la suma de los cuadros. Antes acumulaba
+     el tiempo cuadro a cuadro con un tope por cuadro, así que en un celular
+     que iba justo —donde los cuadros tardan más que ese tope— la barra
+     avanzaba en cámara lenta: cuanto más lento el aparato, más larga la
+     espera, que es exactamente al revés de lo que uno quiere. */
   useEffect(() => {
     let frame;
-    let value = 0;
-    let last = performance.now();
+    const arranque = performance.now();
+    let alcanzoElTecho = 0;
 
-    const loop = (now) => {
-      const delta = Math.min((now - last) / 1000, 0.05);
-      last = now;
+    const loop = (ahora) => {
+      const t = (ahora - arranque) / 1000;
 
-      const ceiling = readyRef.current ? 100 : 92;
-      // Velocidad decreciente: rápido al principio, casi quieto cerca del techo.
-      const speed = 26 + (ceiling - value) * 1.15;
-      value = Math.min(value + speed * delta, ceiling);
-      setProgress(value);
+      // Sube rápido y se va frenando; toca 90 cerca del segundo y medio.
+      const natural = 92 * (1 - Math.exp(-t * 1.9));
 
-      if (value >= 99.9) {
+      let valor;
+      if (readyRef.current) {
+        if (!alcanzoElTecho) alcanzoElTecho = ahora;
+        const cierre = Math.min((ahora - alcanzoElTecho) / 450, 1);
+        valor = Math.min(natural + (100 - natural) * cierre, 100);
+      } else {
+        valor = Math.min(natural, 92);
+      }
+
+      setProgress(valor);
+
+      if (valor >= 99.6) {
         setProgress(100);
-        setTimeout(() => setArmed(true), 420);
+        setTimeout(() => setArmed(true), 380);
         return;
       }
       frame = requestAnimationFrame(loop);

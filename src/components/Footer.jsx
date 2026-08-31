@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
+import SealedMark from "./SealedMark";
 
 /**
  * Footer y — sobre todo — la puerta trasera táctil.
@@ -19,12 +20,25 @@ export default function Footer({
   longPress,
   unlocked = false,
   onQuickOpen,
+  sealedWord,
 }) {
   const { holding, duration, handlers } = longPress;
 
   return (
     <footer className="relative px-6 pb-40 pt-8 text-center">
       <div className="mx-auto flex max-w-md flex-col items-center">
+        {/* El cierre. La página cuenta lo que pasó y se detiene justo antes de
+            la pregunta: eso se lo dice él, en persona. */}
+        <motion.p
+          className="mb-12 max-w-xs text-balance font-serif text-[clamp(1.15rem,4.8vw,1.5rem)] italic leading-snug text-bone/85"
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-15%" }}
+          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {content.closing}
+        </motion.p>
+
         <span className="h-px w-16 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
 
         {/* El punto: decorativo a la vista, puerta secreta al tacto */}
@@ -79,6 +93,8 @@ export default function Footer({
         <span className="font-script text-3xl leading-none text-gold-soft/85">
           {content.signature}
         </span>
+
+        {sealedWord && <SealedMark word={sealedWord} />}
 
         {/* Pista del código: sólo existe mientras alguien está tecleando */}
         <AnimatePresence>

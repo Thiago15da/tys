@@ -55,8 +55,10 @@ function DustCanvas({ secret }) {
       canvas.height = Math.floor(height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      // Densidad proporcional al área, con techo para no castigar mobile.
-      const count = Math.min(Math.round((width * height) / 26000), 64);
+      // Densidad proporcional al área. El techo es bajo a propósito: cada
+      // partícula es un arco que se redibuja 60 veces por segundo, y arriba
+      // de ~35 no se nota ninguna diferencia salvo en la batería.
+      const count = Math.min(Math.round((width * height) / 42000), 34);
       particles = Array.from({ length: count }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
@@ -152,17 +154,17 @@ export default function AuroraBackground({ mode = "default" }) {
 
       {/* Aurora */}
       <motion.div
-        className="absolute -top-[28%] left-[-18%] h-[78vh] w-[78vh] rounded-full blur-[120px] animate-aurora-a"
+        className="absolute -top-[28%] left-[-18%] h-[78vh] w-[78vh] rounded-full blur-[90px] animate-aurora-a"
         animate={{ background: `radial-gradient(circle at 50% 50%, ${palette[0]}, transparent 66%)`, opacity: secret ? 0.75 : 0.55 }}
         transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
       />
       <motion.div
-        className="absolute top-[24%] right-[-24%] h-[70vh] w-[70vh] rounded-full blur-[130px] animate-aurora-b"
+        className="absolute top-[24%] right-[-24%] h-[70vh] w-[70vh] rounded-full blur-[95px] animate-aurora-b"
         animate={{ background: `radial-gradient(circle at 50% 50%, ${palette[1]}, transparent 66%)`, opacity: secret ? 0.7 : 0.45 }}
         transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
       />
       <motion.div
-        className="absolute bottom-[-24%] left-[16%] h-[62vh] w-[62vh] rounded-full blur-[120px] animate-aurora-c"
+        className="absolute bottom-[-24%] left-[16%] h-[62vh] w-[62vh] rounded-full blur-[90px] animate-aurora-c"
         animate={{ background: `radial-gradient(circle at 50% 50%, ${palette[2]}, transparent 68%)`, opacity: secret ? 0.62 : 0.38 }}
         transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
       />
@@ -196,7 +198,9 @@ export default function AuroraBackground({ mode = "default" }) {
 
       {/* Grano de película */}
       <div
-        className="absolute inset-0 opacity-[0.045] mix-blend-overlay"
+        /* Sin mix-blend-mode: mezclar obliga a recomponer la pantalla entera
+           en cada cuadro. Con la opacidad justa se ve prácticamente igual. */
+        className="absolute inset-0 opacity-[0.035]"
         style={{ backgroundImage: GRAIN, backgroundRepeat: "repeat" }}
       />
     </div>
