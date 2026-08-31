@@ -12,6 +12,7 @@ import Timeline from "./components/Timeline";
 import TimeCapsuleCounter from "./components/TimeCapsuleCounter";
 import AudioPlayer from "./components/AudioPlayer";
 import SecretModal from "./components/SecretModal";
+import PhotoWall from "./components/PhotoWall";
 import LockedChapter from "./components/LockedChapter";
 import Footer from "./components/Footer";
 
@@ -24,6 +25,8 @@ import {
   heroContent,
   lockedContent,
   noviosCounterContent,
+  photoWallContent,
+  photos,
   secretContent,
   storyChapters,
 } from "./data/mockData";
@@ -96,8 +99,11 @@ function Experience() {
             <Hero content={heroContent} onScrollHint={scrollToStory} />
             <Timeline ref={timelineRef} chapters={storyChapters} />
 
-            {/* Pasado → presente → futuro. Los tres bloques en ese orden son
-                la columna vertebral de la página. */}
+            {/* Historia → pruebas → tiempo → futuro. Ese orden es la columna
+                vertebral: primero lo que pasó, después las fotos que lo
+                demuestran, después el reloj corriendo, y al final la puerta
+                cerrada. */}
+            <PhotoWall content={photoWallContent} photos={photos} />
             <TimeCapsuleCounter startDate={START_DATE} content={counterContent} />
             <TimeCapsuleCounter startDate={NOVIOS_DATE} content={noviosCounterContent} />
             <LockedChapter content={lockedContent} />

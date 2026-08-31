@@ -93,6 +93,10 @@ export const storyChapters = [
     ],
     accent: "rose",
     side: "right",
+    /* ⚠️ Cuando saques la foto del banquito, guardala en public/fotos/ y
+       cambiá esta línea por:
+         media: { src: "fotos/banquito.jpg", alt: "El banquito" },
+       Va a ser el golpe más fuerte de la página. */
     media: null,
     pull: false,
   },
@@ -181,7 +185,34 @@ export const storyChapters = [
 ];
 
 /* --------------------------------------------------------------------------
- * 5. RELOJ UNO — desde el primer beso
+ * 5. LAS FOTOS — lo que vino después
+ *
+ * Las fotos ya están procesadas en public/fotos/: enderezadas, achicadas para
+ * que carguen rápido y SIN metadatos (las del celular traen las coordenadas
+ * GPS de dónde fueron sacadas, y esta página es pública).
+ *
+ * `caption` es opcional y se dibuja con letra manuscrita abajo de cada foto,
+ * como una polaroid escrita a mano. Vale muchísimo la pena completarlas: un
+ * lugar, una fecha, un chiste interno. Poné null en las que no quieras.
+ * ----------------------------------------------------------------------- */
+export const photoWallContent = {
+  eyebrow: "Y después de eso",
+  title: "Todo lo demás",
+  subtitle:
+    "La historia de arriba son seis días. Esto es lo que vino después, y es la parte que más me gusta.",
+  closing: "Y recién estamos arrancando.",
+};
+
+export const photos = [
+  { src: "fotos/01-beso.jpg", alt: "Sol y Thiago", caption: null },
+  { src: "fotos/02-noche.jpg", alt: "Sol y Thiago", caption: null },
+  { src: "fotos/03-tarde.jpg", alt: "Sol y Thiago", caption: null },
+  { src: "fotos/04-parque.jpg", alt: "Sol y Thiago", caption: null },
+  { src: "fotos/05-flores.jpg", alt: "Sol y Thiago", caption: null },
+];
+
+/* --------------------------------------------------------------------------
+ * 6. RELOJ UNO — desde el primer beso
  * ----------------------------------------------------------------------- */
 export const counterContent = {
   variant: "full",
@@ -199,7 +230,7 @@ export const counterContent = {
 };
 
 /* --------------------------------------------------------------------------
- * 6. RELOJ DOS — desde que son novios
+ * 7. RELOJ DOS — desde que son novios
  * Arranca en cero el día que ella diga que sí. `pending` es lo que muestra
  * mientras esa fecha todavía no llegó.
  * ----------------------------------------------------------------------- */
@@ -220,7 +251,7 @@ export const noviosCounterContent = {
 };
 
 /* --------------------------------------------------------------------------
- * 7. EL CAPÍTULO BLOQUEADO
+ * 8. EL CAPÍTULO BLOQUEADO
  * El título se ve borroneado a propósito: se adivina, no se lee.
  * Al tocarlo tiembla y aparece `denied`.
  * ----------------------------------------------------------------------- */
@@ -234,7 +265,7 @@ export const lockedContent = {
 };
 
 /* --------------------------------------------------------------------------
- * 8. EL CIERRE
+ * 9. EL CIERRE
  * ----------------------------------------------------------------------- */
 export const footerContent = {
   signature: "Thiago",
@@ -242,7 +273,7 @@ export const footerContent = {
 };
 
 /* --------------------------------------------------------------------------
- * 9. EL SECRETO
+ * 10. EL SECRETO
  * Se abre tecleando BANQUITO, o manteniendo apretado 1,6s el puntito dorado
  * del final (la única forma en un celular, donde no hay teclado).
  * ----------------------------------------------------------------------- */
