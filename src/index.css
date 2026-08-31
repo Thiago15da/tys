@@ -30,6 +30,8 @@
   /* — Tipografía — */
   --font-serif: "Playfair Display", ui-serif, Georgia, Cambria, serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  /* Manuscrita: sólo para firmas y para el papelito. Usarla de más la arruina. */
+  --font-script: "Parisienne", "Segoe Script", cursive;
 
   /* — Curvas de animación — */
   --ease-silk: cubic-bezier(0.22, 1, 0.36, 1);
@@ -209,6 +211,24 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+/* Papel: el papelito que te pasó Sol. Blanco cálido, no blanco puro. */
+@utility paper {
+  background:
+    linear-gradient(168deg, #f6f1e4 0%, #efe7d6 55%, #e8dec9 100%);
+  color: #3d3527;
+  box-shadow:
+    0 1px 0 0 rgb(255 255 255 / 0.6) inset,
+    0 18px 40px -16px rgb(0 0 0 / 0.75),
+    0 6px 14px -8px rgb(0 0 0 / 0.5);
+}
+
+/* Texto ilegible pero casi descifrable: el capítulo bloqueado */
+@utility redacted {
+  filter: blur(7px) saturate(0.7);
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 /* Hairline: los bordes de 1px reales, sin engordar en retina */

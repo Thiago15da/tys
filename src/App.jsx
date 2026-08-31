@@ -12,14 +12,18 @@ import Timeline from "./components/Timeline";
 import TimeCapsuleCounter from "./components/TimeCapsuleCounter";
 import AudioPlayer from "./components/AudioPlayer";
 import SecretModal from "./components/SecretModal";
+import LockedChapter from "./components/LockedChapter";
 import Footer from "./components/Footer";
 
 import {
+  NOVIOS_DATE,
   START_DATE,
   audioTrack,
   counterContent,
   footerContent,
   heroContent,
+  lockedContent,
+  noviosCounterContent,
   secretContent,
   storyChapters,
 } from "./data/mockData";
@@ -91,7 +95,13 @@ function Experience() {
           <>
             <Hero content={heroContent} onScrollHint={scrollToStory} />
             <Timeline ref={timelineRef} chapters={storyChapters} />
+
+            {/* Pasado → presente → futuro. Los tres bloques en ese orden son
+                la columna vertebral de la página. */}
             <TimeCapsuleCounter startDate={START_DATE} content={counterContent} />
+            <TimeCapsuleCounter startDate={NOVIOS_DATE} content={noviosCounterContent} />
+            <LockedChapter content={lockedContent} />
+
             <Footer
               content={footerContent}
               codeProgress={codeProgress}

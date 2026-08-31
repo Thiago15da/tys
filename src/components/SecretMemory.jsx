@@ -108,7 +108,7 @@ export default function SecretMemory({ content }) {
 
       {content.signature && (
         <motion.span
-          className="mt-7 font-serif text-lg italic text-cocoa/80"
+          className="mt-7 font-script text-3xl leading-none text-cocoa"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7, duration: 0.9 }}

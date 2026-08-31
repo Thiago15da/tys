@@ -76,7 +76,9 @@ export default function Footer({
           />
         </button>
 
-        <span className="font-serif text-sm italic text-ash">{content.signature}</span>
+        <span className="font-script text-3xl leading-none text-gold-soft/85">
+          {content.signature}
+        </span>
 
         {/* Pista del código: sólo existe mientras alguien está tecleando */}
         <AnimatePresence>

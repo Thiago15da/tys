@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 /**
  * Fondo dinámico en tres capas, todo detrás del contenido (z -10):
@@ -138,6 +138,9 @@ export default function AuroraBackground({ mode = "default" }) {
   const palette = PALETTES[mode] ?? PALETTES.default;
   const secret = mode === "secret";
 
+  const { scrollYProgress } = useScroll();
+  const warmth = useTransform(scrollYProgress, [0, 0.45, 1], [0, 0.35, 1]);
+
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
       {/* Base */}
@@ -166,6 +169,21 @@ export default function AuroraBackground({ mode = "default" }) {
 
       {/* Polvo */}
       <DustCanvas secret={secret} />
+
+      {/* Amanecer.
+          La historia arranca fría (violeta, la espera, el lunes que no vino) y
+          termina caliente. En vez de cambiar la paleta de golpe, dejamos que
+          una luz dorada suba desde abajo a medida que se scrollea: cuando
+          llega a los relojes, la pantalla ya está tibia. Nadie lo nota; todo
+          el mundo lo siente. Y ella se llama Sol. */}
+      <motion.div
+        className="absolute inset-0"
+        style={{
+          opacity: warmth,
+          background:
+            "radial-gradient(ellipse 130% 70% at 50% 118%, rgba(212,182,120,0.30), rgba(231,168,172,0.12) 45%, transparent 72%)",
+        }}
+      />
 
       {/* Viñeta: hunde los bordes y centra la mirada */}
       <div

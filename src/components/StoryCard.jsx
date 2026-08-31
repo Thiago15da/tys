@@ -105,6 +105,7 @@ export default function StoryCard({ chapter, index }) {
             />
 
             {chapter.media?.src && <CardMedia media={chapter.media} progress={scrollYProgress} />}
+            {chapter.note && <PaperNote text={chapter.note} />}
 
             <header className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
               <time className="text-[0.58rem] font-light uppercase tracking-[0.32em] text-ash">
@@ -136,6 +137,49 @@ export default function StoryCard({ chapter, index }) {
           </>
         )}
       </motion.article>
+    </motion.div>
+  );
+}
+
+/**
+ * El papelito doblado.
+ *
+ * Es el objeto que cambia la historia, así que no puede ser una cita más en
+ * cursiva: tiene que sentirse como un papel real apoyado sobre la tarjeta.
+ * De ahí el papel color hueso (nunca blanco puro), la rotación de 2,5°, el
+ * pliegue horizontal en el medio y la sombra proyectada.
+ *
+ * Entra con un rebote corto, como algo que te acaban de pasar en la mano.
+ */
+function PaperNote({ text }) {
+  const reduced = useReducedMotion();
+
+  return (
+    <motion.div
+      className="relative mx-auto mb-7 w-full max-w-[270px] paper rounded-[3px] px-6 py-8"
+      initial={reduced ? { opacity: 0 } : { opacity: 0, y: 26, rotate: -9, scale: 0.92 }}
+      whileInView={{ opacity: 1, y: 0, rotate: -2.4, scale: 1 }}
+      viewport={{ once: true, margin: "-18%" }}
+      transition={{ type: "spring", stiffness: 120, damping: 13, mass: 0.9, delay: 0.1 }}
+    >
+      {/* El pliegue: estuvo doblado al medio */}
+      <span
+        className="pointer-events-none absolute inset-x-0 top-1/2 h-px -translate-y-1/2"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent, rgba(61,53,39,0.16) 15%, rgba(61,53,39,0.16) 85%, transparent)",
+        }}
+        aria-hidden="true"
+      />
+      <span
+        className="pointer-events-none absolute inset-x-0 top-1/2 h-[3px]"
+        style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.5), transparent)" }}
+        aria-hidden="true"
+      />
+
+      <p className="relative text-center font-script text-[1.6rem] leading-[1.35] text-[#3d3527]">
+        {text}
+      </p>
     </motion.div>
   );
 }

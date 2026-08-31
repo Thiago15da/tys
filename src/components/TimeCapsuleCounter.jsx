@@ -54,6 +54,82 @@ export default function TimeCapsuleCounter({ startDate, content }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-20%" });
 
+  /* La fecha todavía no llegó: en vez de seis ceros, una promesa. */
+  if (elapsed.future) {
+    return (
+      <section ref={ref} className="relative px-5 py-24 sm:px-8 sm:py-28">
+        <motion.div
+          className="glass mx-auto flex w-full max-w-xl flex-col items-center rounded-[26px] px-6 py-12 text-center"
+          initial={{ opacity: 0, y: 28, scale: 0.97 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: "-15%" }}
+          transition={{ type: "spring", stiffness: 58, damping: 16 }}
+        >
+          <span className="text-[0.58rem] font-light uppercase tracking-[0.4em] text-mist">
+            {content.eyebrow}
+          </span>
+          <h2 className="mt-5 font-serif text-[clamp(1.8rem,7vw,2.6rem)] font-normal leading-tight text-gradient">
+            {content.title}
+          </h2>
+          <motion.p
+            className="mt-6 max-w-xs text-balance font-serif text-lg italic leading-relaxed text-gold-soft/80"
+            animate={{ opacity: [0.6, 1, 0.6] }}
+            transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            {content.pending}
+          </motion.p>
+        </motion.div>
+      </section>
+    );
+  }
+
+  /* Variante compacta: los días mandan, el resto acompaña en chico. */
+  if (content.variant === "days") {
+    return (
+      <section ref={ref} className="relative px-5 py-20 sm:px-8 sm:py-24">
+        <motion.div
+          className="glass relative mx-auto flex w-full max-w-xl flex-col items-center overflow-hidden rounded-[26px] px-6 py-11 text-center"
+          initial={{ opacity: 0, y: 30, scale: 0.97 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: "-15%" }}
+          transition={{ type: "spring", stiffness: 58, damping: 16 }}
+        >
+          {/* Amanecer: el resplandor cálido que sube por detrás (para Sol) */}
+          <span
+            className="pointer-events-none absolute -bottom-24 left-1/2 h-52 w-72 -translate-x-1/2 rounded-full blur-[64px]"
+            style={{ background: "radial-gradient(circle, rgba(212,182,120,0.4), transparent 70%)" }}
+            aria-hidden="true"
+          />
+
+          <span className="relative text-[0.58rem] font-light uppercase tracking-[0.4em] text-mist">
+            {content.eyebrow}
+          </span>
+
+          <span className="relative mt-7 font-serif text-[clamp(4rem,22vw,7rem)] leading-none">
+            <Odometer value={elapsed.days} minDigits={1} digitClassName="text-gradient" />
+          </span>
+
+          <span className="relative mt-3 text-[0.6rem] font-light uppercase tracking-[0.42em] text-gold/80">
+            {content.title}
+          </span>
+
+          {/* El detalle fino: las horas siguen corriendo aunque el día no cambie */}
+          <div className="relative mt-7 flex items-center gap-2.5 text-[0.66rem] tabular-nums text-ash">
+            <Odometer value={elapsed.hours} minDigits={2} />
+            <span className="opacity-40">:</span>
+            <Odometer value={elapsed.minutes} minDigits={2} />
+            <span className="opacity-40">:</span>
+            <Odometer value={elapsed.seconds} minDigits={2} />
+          </div>
+
+          <p className="relative mt-7 max-w-xs text-balance text-[0.82rem] font-light italic leading-relaxed text-mist">
+            {content.caption}
+          </p>
+        </motion.div>
+      </section>
+    );
+  }
+
   const units = [
     { key: "years", value: elapsed.years, label: content.labels.years, minDigits: 1 },
     { key: "months", value: elapsed.months, label: content.labels.months, minDigits: 1 },
