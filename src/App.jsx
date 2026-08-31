@@ -13,6 +13,7 @@ import TimeCapsuleCounter from "./components/TimeCapsuleCounter";
 import AudioPlayer from "./components/AudioPlayer";
 import SecretModal from "./components/SecretModal";
 import PhotoWall from "./components/PhotoWall";
+import SongSection from "./components/SongSection";
 import LockedChapter from "./components/LockedChapter";
 import Footer from "./components/Footer";
 
@@ -27,6 +28,7 @@ import {
   noviosCounterContent,
   photoWallContent,
   photos,
+  songContent,
   secretContent,
   storyChapters,
 } from "./data/mockData";
@@ -99,11 +101,12 @@ function Experience() {
             <Hero content={heroContent} onScrollHint={scrollToStory} />
             <Timeline ref={timelineRef} chapters={storyChapters} />
 
-            {/* Historia → pruebas → tiempo → futuro. Ese orden es la columna
-                vertebral: primero lo que pasó, después las fotos que lo
-                demuestran, después el reloj corriendo, y al final la puerta
-                cerrada. */}
+            {/* Historia → pruebas → sentido → tiempo → futuro.
+                La canción va justo acá: después de las fotos ya está todo
+                mostrado, y antes de los relojes hace falta decir por qué
+                importa. Es el pico emocional de la página. */}
             <PhotoWall content={photoWallContent} photos={photos} />
+            <SongSection content={songContent} />
             <TimeCapsuleCounter startDate={START_DATE} content={counterContent} />
             <TimeCapsuleCounter startDate={NOVIOS_DATE} content={noviosCounterContent} />
             <LockedChapter content={lockedContent} />

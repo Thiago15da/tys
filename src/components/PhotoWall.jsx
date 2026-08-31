@@ -16,13 +16,17 @@ import { asset } from "../lib/asset";
  * cuadradas hubiera parecido un perfil de Instagram.
  */
 
-/** Cada foto cae con su propia inclinación y desfase. Nada alineado. */
+/** Cada foto cae con su propia inclinación y desfase. Nada alineado.
+ *  Son siete variantes y no cinco para que el patrón no se note al repetirse
+ *  sobre diez fotos. */
 const LAYOUT = [
   { rotate: -3.4, shift: "-6%", tape: true },
   { rotate: 2.8, shift: "7%", tape: false },
   { rotate: -1.9, shift: "-4%", tape: true },
   { rotate: 3.4, shift: "5%", tape: false },
   { rotate: -2.6, shift: "-7%", tape: true },
+  { rotate: 1.7, shift: "3%", tape: false },
+  { rotate: -4.1, shift: "-3%", tape: true },
 ];
 
 function Polaroid({ photo, index }) {
@@ -73,8 +77,8 @@ function Polaroid({ photo, index }) {
           <img
             src={asset(photo.src)}
             alt={photo.alt}
-            width={825}
-            height={1100}
+            width={photo.w}
+            height={photo.h}
             loading="lazy"
             decoding="async"
             className="block h-full w-full object-cover"

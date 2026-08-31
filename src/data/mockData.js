@@ -191,9 +191,12 @@ export const storyChapters = [
  * que carguen rápido y SIN metadatos (las del celular traen las coordenadas
  * GPS de dónde fueron sacadas, y esta página es pública).
  *
- * `caption` es opcional y se dibuja con letra manuscrita abajo de cada foto,
- * como una polaroid escrita a mano. Vale muchísimo la pena completarlas: un
- * lugar, una fecha, un chiste interno. Poné null en las que no quieras.
+ * Sin leyendas a propósito: son momentos muy distintos entre sí y ponerles
+ * texto obligaría a explicarlas. Se entienden solas.
+ *
+ * `w` y `h` son las medidas reales del archivo. Sirven para que el navegador
+ * reserve el espacio exacto antes de bajar la imagen: sin eso, la página da
+ * saltos mientras carga. Si agregás fotos, poné sus medidas.
  * ----------------------------------------------------------------------- */
 export const photoWallContent = {
   eyebrow: "Y después de eso",
@@ -204,15 +207,53 @@ export const photoWallContent = {
 };
 
 export const photos = [
-  { src: "fotos/01-beso.jpg", alt: "Sol y Thiago", caption: null },
-  { src: "fotos/02-noche.jpg", alt: "Sol y Thiago", caption: null },
-  { src: "fotos/03-tarde.jpg", alt: "Sol y Thiago", caption: null },
-  { src: "fotos/04-parque.jpg", alt: "Sol y Thiago", caption: null },
-  { src: "fotos/05-flores.jpg", alt: "Sol y Thiago", caption: null },
+  { src: "fotos/01-beso.jpg", alt: "Sol y Thiago", w: 825, h: 1100 },
+  { src: "fotos/02-noche.jpg", alt: "Sol y Thiago", w: 825, h: 1100 },
+  { src: "fotos/03-tarde.jpg", alt: "Sol y Thiago", w: 825, h: 1100 },
+  { src: "fotos/04-parque.jpg", alt: "Sol y Thiago", w: 825, h: 1100 },
+  { src: "fotos/05-flores.jpg", alt: "Sol y Thiago", w: 825, h: 1100 },
+  { src: "fotos/06-lucecitas.jpg", alt: "Sol y Thiago", w: 619, h: 1100 },
+  { src: "fotos/07-el-lugar.jpg", alt: "El lugar", w: 825, h: 1100 },
+  { src: "fotos/08-el-auto.jpg", alt: "Las flores en el auto", w: 825, h: 1100 },
+  { src: "fotos/09-paraguay.jpg", alt: "Sol y Thiago", w: 825, h: 1100 },
+  { src: "fotos/10-en-casa.jpg", alt: "Sol y Thiago", w: 619, h: 1100 },
 ];
 
 /* --------------------------------------------------------------------------
- * 6. RELOJ UNO — desde el primer beso
+ * 6. LA CANCIÓN
+ *
+ * El corazón de la página. La letra habla de un "río de casualidades" y la
+ * historia de arriba ES una cadena de casualidades: el cambio de turno, la
+ * renuncia que no fue, el segundo cambio de turno. Por eso la canción no es
+ * decoración de fondo: es la explicación.
+ *
+ * `punchline` cierra con el título de la canción convertido en conclusión.
+ * ----------------------------------------------------------------------- */
+export const songContent = {
+  eyebrow: "La canción",
+  intro: "Hay una canción que dice esto mejor de lo que puedo decirlo yo.",
+  lines: [
+    "Sé que eres tú",
+    "en esta y mil realidades,",
+    "eres el cauce de luz,",
+    "río de casualidades.",
+    "No quisiera explicarte,",
+    "solo sé que al mirarte",
+    "simplemente eres tú.",
+  ],
+  track: "Es verdad · Daniel, me estás matando",
+  play: "Escucharla",
+  playing: "Sonando",
+  reflection: [
+    "«Río de casualidades». Eso fue exactamente lo que nos pasó: pedí cambio de turno dos veces, te fuiste un lunes y volviste un martes, y nada de eso estaba planeado.",
+    "En estos meses me hiciste crecer más de lo que crecí en años, y me hiciste sentir querido de una forma que no conocía. Nunca quise a nadie así.",
+    "No sé explicarte por qué. Y tampoco me hace falta.",
+  ],
+  punchline: "Solo sé que es verdad.",
+};
+
+/* --------------------------------------------------------------------------
+ * 7. RELOJ UNO — desde el primer beso
  * ----------------------------------------------------------------------- */
 export const counterContent = {
   variant: "full",
@@ -230,7 +271,7 @@ export const counterContent = {
 };
 
 /* --------------------------------------------------------------------------
- * 7. RELOJ DOS — desde que son novios
+ * 8. RELOJ DOS — desde que son novios
  * Arranca en cero el día que ella diga que sí. `pending` es lo que muestra
  * mientras esa fecha todavía no llegó.
  * ----------------------------------------------------------------------- */
@@ -251,7 +292,7 @@ export const noviosCounterContent = {
 };
 
 /* --------------------------------------------------------------------------
- * 8. EL CAPÍTULO BLOQUEADO
+ * 9. EL CAPÍTULO BLOQUEADO
  * El título se ve borroneado a propósito: se adivina, no se lee.
  * Al tocarlo tiembla y aparece `denied`.
  * ----------------------------------------------------------------------- */
@@ -265,7 +306,7 @@ export const lockedContent = {
 };
 
 /* --------------------------------------------------------------------------
- * 9. EL CIERRE
+ * 10. EL CIERRE
  * ----------------------------------------------------------------------- */
 export const footerContent = {
   signature: "Thiago",
@@ -273,7 +314,7 @@ export const footerContent = {
 };
 
 /* --------------------------------------------------------------------------
- * 10. EL SECRETO
+ * 11. EL SECRETO
  * Se abre tecleando BANQUITO, o manteniendo apretado 1,6s el puntito dorado
  * del final (la única forma en un celular, donde no hay teclado).
  * ----------------------------------------------------------------------- */
