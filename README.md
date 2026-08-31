@@ -142,6 +142,13 @@ no convierte un sitio que ya existía. De ahí que este paso quede a mano.
 Después de cambiarlo: *Actions → "Deploy a GitHub Pages" → Run workflow*, o
 simplemente hacé un push. El build de Jekyll deja de dispararse solo.
 
+**Importante:** cambiar el Source no vuelve a publicar nada por sí solo. Lo
+que queda en línea sigue siendo la última publicación que se hizo — que, si
+el Source todavía estaba en modo rama, es la versión rota de Jekyll. Por eso
+hace falta el paso de arriba (relanzar el workflow o pushear) *después* de
+cambiar el ajuste: sin eso, la página sigue en blanco aunque el Source ya
+esté bien.
+
 Mientras sea un *project page* el sitio queda en:
 
     https://thiago15da.github.io/tys/
