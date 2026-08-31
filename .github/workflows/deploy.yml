@@ -42,8 +42,9 @@ jobs:
         run: npm run build
 
       - name: Configurar Pages
-        # `enablement: true` intenta activar Pages por API si todavía no lo
-        # está. Si falla por permisos, activalo a mano en
+        # `enablement: true` activa Pages si el repo todavía no lo tiene, pero
+        # NO convierte un sitio que ya existe en modo "deploy from a branch".
+        # Ese cambio es un ajuste del repo y va a mano una sola vez:
         # Settings → Pages → Source: GitHub Actions.
         uses: actions/configure-pages@v5
         with:

@@ -121,10 +121,26 @@ src/
 Cada push a la rama por defecto compila y publica solo, vía
 `.github/workflows/deploy.yml`. No hay nada que subir a mano.
 
-**Un único paso manual, la primera vez:** en el repo, *Settings → Pages →
-Build and deployment → Source: **GitHub Actions***. El workflow intenta
-activarlo por API (`enablement: true`), así que puede que ya esté hecho; si el
-job "Configurar Pages" falla, es esto lo que falta.
+### ⚠️ Paso manual obligatorio, una sola vez
+
+En el repo: *Settings → Pages → Build and deployment → Source*, cambiar
+**"Deploy from a branch"** por **"GitHub Actions"**.
+
+No es opcional ni un detalle de prolijidad. Este repo tenía Pages activo en modo
+rama, y en ese modo GitHub corre además su propio build de Jekyll que **publica
+el código fuente crudo** — el `index.html` de Vite, que apunta a
+`/src/main.jsx` y no existe compilado. Los dos despliegues escriben en el mismo
+lugar y gana el último: Jekyll tarda más (baja una imagen Docker), así que gana
+casi siempre.
+
+Mientras el Source siga en "Deploy from a branch", el sitio muestra una página
+rota por más que el workflow termine en verde.
+
+El `enablement: true` del workflow activa Pages cuando el repo no lo tiene, pero
+no convierte un sitio que ya existía. De ahí que este paso quede a mano.
+
+Después de cambiarlo: *Actions → "Deploy a GitHub Pages" → Run workflow*, o
+simplemente hacé un push. El build de Jekyll deja de dispararse solo.
 
 Mientras sea un *project page* el sitio queda en:
 
