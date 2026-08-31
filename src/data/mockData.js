@@ -1,79 +1,75 @@
 /**
  * ============================================================================
- *  mockData.js  —  ÚNICO ARCHIVO QUE TENÉS QUE TOCAR
+ *  LA HISTORIA
  * ============================================================================
- *  Toda la copy, las fechas y los assets viven acá. Ningún componente tiene
- *  texto hardcodeado: reemplazá los valores de este archivo y la experiencia
- *  entera se actualiza sola.
+ *  Todo el texto de la página vive acá. Ningún componente tiene copy adentro:
+ *  cambiás algo en este archivo y la experiencia entera se actualiza.
  *
- *  Los textos actuales son PLACEHOLDERS de estructura. Respetá las claves.
+ *  Los textos son un BORRADOR con tus recuerdos. Leelos en voz alta y
+ *  cambiá lo que no suene a vos — es tu carta, tiene que sonar a tu voz y no
+ *  a la de nadie más. Los detalles reales (el banquito, la peluquería, el
+ *  perfil sin cara) son los que pegan; no hace falta adornarlos.
+ *
+ *  Lo que falta está marcado así: [entre corchetes].
  * ============================================================================
  */
 
 /* --------------------------------------------------------------------------
- * 1. FECHA BASE DE LA CÁPSULA
- * El contador en vivo mide el tiempo transcurrido desde este instante.
- * Formato ISO local (sin "Z") para que respete la zona horaria del visitante.
+ * 1. LA FECHA
+ * El contador mide el tiempo desde el primer beso: martes 19 de mayo de 2026,
+ * a la salida del trabajo.
+ *
+ * ⚠️ Está en medianoche (00:00) porque no me dijiste la hora. Como el reloj
+ * muestra horas, minutos y segundos, conviene poner la hora real aproximada
+ * de la salida — por ejemplo "2026-05-19T17:30:00" si salieron 17:30.
  * ----------------------------------------------------------------------- */
 export const START_DATE = "2026-05-19T00:00:00";
 
 /* --------------------------------------------------------------------------
- * 2. HERO
- * `title` es un array: cada string es una línea que se revela por separado.
- * Poné una palabra sola en su propia línea si querés que respire más.
+ * 2. LA PORTADA
  * ----------------------------------------------------------------------- */
 export const heroContent = {
-  eyebrow: "Cápsula del tiempo · 001",
-  title: ["Todo lo que", "pasó desde", "aquel día"],
+  eyebrow: "13 → 19 de mayo de 2026",
+  title: ["Seis días", "de mayo"],
   subtitle:
-    "Un archivo vivo. Cada tarjeta guarda un momento exacto, y el reloj del final no se detiene nunca.",
+    "Del 13 al 19. Todo lo que pasó entre esos dos días es la razón por la que hoy tenés esto en la mano.",
   scrollHint: "Deslizá",
 };
 
 /* --------------------------------------------------------------------------
- * 3. REPRODUCTOR
- * Dejá tu archivo en `public/audio/` y apuntá `src` ahí, SIN barra inicial:
- * las rutas se resuelven contra la base con la que se compiló, así el audio
- * funciona igual en github.io/tys/ que en tu dominio propio.
- * Si el archivo no existe, el player entra en modo simulado: la UI, el
- * ecualizador y la barra de progreso funcionan igual (útil para maquetar).
+ * 3. LA MÚSICA
+ * ⚠️ Falta el archivo. Conseguí "Es verdad" en mp3 y guardalo como
+ *    public/audio/es-verdad.mp3
+ * Hasta que lo pongas, el reproductor funciona en modo simulado (se ve todo
+ * igual, pero no suena).
  * ----------------------------------------------------------------------- */
 export const audioTrack = {
   title: "Es verdad",
   artist: "Daniel, me estás matando",
   src: "audio/es-verdad.mp3",
-  /** Duración en segundos. Sólo se usa como fallback del modo simulado. */
   fallbackDuration: 214,
-  /** Volumen inicial 0–1. El Konami lo baja a `duckedVolume`. */
   volume: 0.55,
   duckedVolume: 0.12,
 };
 
 /* --------------------------------------------------------------------------
- * 4. LÍNEA DE TIEMPO
- * Cada objeto es una tarjeta.
- *   id      → único y estable (key de React)
- *   stamp   → la marca chica de arriba (fecha, hora, lo que quieras)
- *   kicker  → etiqueta corta opcional; null para ocultarla
- *   title   → titular en serif
- *   body    → párrafo(s). Array = varios párrafos.
- *   accent  → "gold" | "rose" | "violet" | "teal"
- *   side    → "left" | "right" (sólo afecta desktop; en mobile es una columna)
- *   media   → { src, alt } o null. Sin media la tarjeta es 100% tipográfica.
- *             Para una foto propia: ponela en `public/` y referenciala sin
- *             barra inicial ("fotos/primera.jpg"). Las URLs externas van tal
- *             cual.
- *   pull    → true convierte la tarjeta en una cita grande, sin caja. Usalo
- *             cada 3–4 tarjetas para romper el ritmo.
+ * 4. LOS CAPÍTULOS
+ * Seis tarjetas: el encuentro, el banquito, el silencio, la desaparición,
+ * la vuelta y el beso. Ese es el arco — subida, caída y remontada.
+ *
+ * Si querés sumar fotos: guardalas en public/fotos/ y poné
+ *   media: { src: "fotos/banquito.jpg", alt: "El banquito" }
+ * Una foto del banquito en el capítulo 2 sería demoledora.
  * ----------------------------------------------------------------------- */
 export const storyChapters = [
   {
-    id: "cap-01",
-    stamp: "19 · 05 · 2026",
-    kicker: "El principio",
-    title: "Placeholder del primer capítulo",
+    id: "cap-01-cambio",
+    stamp: "Miércoles 13 de mayo",
+    kicker: "El cambio de turno",
+    title: "Pedí cambio de turno y me tocó capacitarte",
     body: [
-      "Este párrafo existe sólo para medir el ritmo tipográfico de la tarjeta. Escribí acá el primer momento de la historia, el que arranca todo.",
+      "Yo entraba a la tarde, vos entrabas a la mañana. Pedí el cambio por una razón cualquiera, de esas que uno se olvida a la semana.",
+      "Ese día me tocó capacitarte porque recién entrabas. Empezamos a charlar y fluyó solo. Todavía no sabía que ese trámite iba a terminar siendo la mejor decisión del año.",
     ],
     accent: "gold",
     side: "left",
@@ -81,13 +77,13 @@ export const storyChapters = [
     pull: false,
   },
   {
-    id: "cap-02",
-    stamp: "02 · 06 · 2026",
-    kicker: "Sin aviso",
-    title: "Segundo momento",
+    id: "cap-02-banquito",
+    stamp: "Ese mismo mediodía",
+    kicker: "El banquito",
+    title: "Almorzamos en un banquito de la calle",
     body: [
-      "Texto de relleno para verificar cómo respira un bloque de dos párrafos dentro del vidrio.",
-      "El segundo párrafo hereda el mismo interlineado y separación. Probá largos distintos antes de escribir el definitivo.",
+      "Llegó la hora del almuerzo y te invité. No había mucho más que un banquito ahí afuera, y ahí nos sentamos a comer.",
+      "Después volvimos a la capacitación y no pasó nada. Pero me fui a mi casa sabiendo que algo había pasado.",
     ],
     accent: "rose",
     side: "right",
@@ -95,10 +91,10 @@ export const storyChapters = [
     pull: false,
   },
   {
-    id: "cap-03",
+    id: "cap-03-frase",
     stamp: "—",
     kicker: null,
-    title: "Acá va una frase que quieras que pegue fuerte.",
+    title: "Ese día no pasó nada. Y al mismo tiempo pasó todo.",
     body: [],
     accent: "gold",
     side: "left",
@@ -106,28 +102,28 @@ export const storyChapters = [
     pull: true,
   },
   {
-    id: "cap-04",
-    stamp: "17 · 07 · 2026",
-    kicker: "El viaje",
-    title: "Un capítulo con imagen",
+    id: "cap-04-renuncia",
+    stamp: "Lunes 18 de mayo",
+    kicker: "Te fuiste",
+    title: "Me dijeron que no venías más",
     body: [
-      "Cuando `media` tiene un src, la tarjeta abre con la foto arriba y el texto debajo. La imagen hace un parallax suave al scrollear.",
+      "El 14 y el 15 fueron feriado, y atrás venía el fin de semana. Cuatro días esperando que llegara el lunes para verte otra vez.",
+      "Llegué el lunes y no estabas. Me dijeron que habías renunciado, que no ibas a volver.",
+      "Te busqué en Instagram. Te busqué en la peluquería donde me habías dicho que trabajabas. Encontré un perfil que podía ser el tuyo, pero no se te veía la cara y no podía estar seguro. Me quedé con la idea de que había perdido la única oportunidad de pedirte el número.",
     ],
     accent: "violet",
     side: "right",
-    media: {
-      src: "https://images.unsplash.com/photo-1502790671504-542ad42d5189?q=80&w=1200&auto=format&fit=crop",
-      alt: "Placeholder — reemplazar por una foto propia en /public",
-    },
+    media: null,
     pull: false,
   },
   {
-    id: "cap-05",
-    stamp: "09 · 08 · 2026",
-    kicker: "Lo que no dijimos",
-    title: "Cuarto momento",
+    id: "cap-05-volviste",
+    stamp: "Martes 19 de mayo",
+    kicker: "Volviste",
+    title: "Y al otro día estabas ahí",
     body: [
-      "Otra tarjeta para chequear que el ritmo alternado izquierda/derecha no se sienta mecánico en pantallas grandes.",
+      "No habías renunciado. Estabas ahí, como si nada.",
+      "Yo ya sabía qué hacer: pedí cambio de turno otra vez, porque eso significaba que me tocaba capacitarte de nuevo. Esa segunda vez se rozaron las manos más veces de las necesarias, y nos miramos más veces de las necesarias. Los dos sabíamos.",
     ],
     accent: "teal",
     side: "left",
@@ -135,12 +131,13 @@ export const storyChapters = [
     pull: false,
   },
   {
-    id: "cap-06",
-    stamp: "Hoy",
-    kicker: "Y ahora",
-    title: "El último capítulo antes del reloj",
+    id: "cap-06-beso",
+    stamp: "Ese día, a la salida",
+    kicker: "Vamos juntos",
+    title: "Traje el auto y te dije dos palabras",
     body: [
-      "Cerrá con algo que empuje hacia abajo, porque justo después arranca el contador y conviene que la transición se sienta intencional.",
+      "«Vamos juntos.» Te iba a llevar a la peluquería, nada más que eso.",
+      "No llegamos ni a arrancar. Te lanzaste vos, y nos besamos. El reloj que sigue acá abajo arranca justo ahí.",
     ],
     accent: "gold",
     side: "right",
@@ -150,13 +147,12 @@ export const storyChapters = [
 ];
 
 /* --------------------------------------------------------------------------
- * 5. CONTADOR EN VIVO
+ * 5. EL RELOJ
  * ----------------------------------------------------------------------- */
 export const counterContent = {
-  eyebrow: "Desde entonces",
-  title: "El tiempo exacto",
+  eyebrow: "Desde ese beso",
+  title: "El reloj que arrancaste vos",
   caption: "Y sigue contando, ahora mismo, mientras leés esto.",
-  /** Etiquetas de las unidades, en orden. */
   labels: {
     years: "Años",
     months: "Meses",
@@ -168,26 +164,29 @@ export const counterContent = {
 };
 
 /* --------------------------------------------------------------------------
- * 6. FOOTER
+ * 6. EL CIERRE
  * ----------------------------------------------------------------------- */
 export const footerContent = {
-  signature: "Hecho a mano",
-  hint: "Hay algo escondido acá adentro.",
+  signature: "— [tu nombre acá]",
+  hint: "Hay algo escondido acá.",
 };
 
 /* --------------------------------------------------------------------------
- * 7. EASTER EGG — Konami custom
- * `sequence` es la palabra que hay que teclear (case-insensitive).
- * En mobile no hay teclado: el gesto alternativo es mantener presionado
- * 1,6s el punto decorativo del footer.
+ * 7. EL SECRETO
+ * Se abre tecleando BANQUITO, o manteniendo apretado 1,6s el puntito dorado
+ * del final (que es la única forma en un celular, donde no hay teclado).
+ *
+ * ⚠️ Ojo con esto: si no le dejás una pista en la carta, es MUY difícil que
+ * lo encuentre sola. Ver la nota que te dejé en el chat.
  * ----------------------------------------------------------------------- */
 export const secretContent = {
   sequence: "BANQUITO",
-  eyebrow: "Easter egg",
-  title: "Mensaje Secreto Desbloqueado",
+  eyebrow: "Te acordaste",
+  title: "El banquito",
   body: [
-    "Este es el placeholder del mensaje secreto. Reemplazá este texto por lo que quieras que aparezca sólo para quien encuentre la palabra.",
+    "Si llegaste hasta acá es porque te acordaste dónde almorzamos el primer día.",
+    "Ese banquito en la calle fue el mejor lugar en el que comí en mi vida. Y el chocolate que tenés en la mano es justo el que te gusta. Nada de lo que estás sosteniendo ahora mismo es casualidad.",
   ],
-  signature: "—",
-  dismiss: "Guardar el secreto",
+  signature: "— [tu nombre acá]",
+  dismiss: "Cerrar",
 };
