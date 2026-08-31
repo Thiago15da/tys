@@ -1,0 +1,67 @@
+name: Deploy a GitHub Pages
+
+on:
+  push:
+    # La rama por defecto del repo hoy es la de trabajo. `main` queda listada
+    # de antemano para que el día que renombres o crees la rama principal el
+    # despliegue siga funcionando sin tocar este archivo.
+    branches:
+      - main
+      - claude/capsula-tiempo-spa-3xtxhp
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Un despliegue por vez. No cancelamos el que está en curso: preferimos que
+# termine de publicar antes de encolar el siguiente.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Compilar
+    runs-on: ubuntu-latest
+    steps:
+      - name: Traer el código
+        uses: actions/checkout@v4
+
+      - name: Preparar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Compilar
+        run: npm run build
+
+      - name: Configurar Pages
+        # `enablement: true` intenta activar Pages por API si todavía no lo
+        # está. Si falla por permisos, activalo a mano en
+        # Settings → Pages → Source: GitHub Actions.
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Subir el artefacto
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Publicar
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Desplegar
+        id: deployment
+        uses: actions/deploy-pages@v4

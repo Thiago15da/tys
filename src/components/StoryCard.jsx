@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { motion, useInView, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { asset } from "../lib/asset";
 
 /**
  * Paleta por capítulo. Las clases están escritas COMPLETAS a propósito:
@@ -147,7 +148,7 @@ function CardMedia({ media, progress }) {
   return (
     <div className="relative mb-6 aspect-[4/3] overflow-hidden rounded-2xl border border-white/[0.07] bg-ink-700">
       <motion.img
-        src={media.src}
+        src={asset(media.src)}
         alt={media.alt ?? ""}
         loading="lazy"
         decoding="async"

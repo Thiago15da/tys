@@ -32,14 +32,16 @@ export const heroContent = {
 
 /* --------------------------------------------------------------------------
  * 3. REPRODUCTOR
- * Dejá tu archivo en `public/audio/` y apuntá `src` ahí.
+ * Dejá tu archivo en `public/audio/` y apuntá `src` ahí, SIN barra inicial:
+ * las rutas se resuelven contra la base con la que se compiló, así el audio
+ * funciona igual en github.io/tys/ que en tu dominio propio.
  * Si el archivo no existe, el player entra en modo simulado: la UI, el
  * ecualizador y la barra de progreso funcionan igual (útil para maquetar).
  * ----------------------------------------------------------------------- */
 export const audioTrack = {
   title: "Es verdad",
   artist: "Daniel, me estás matando",
-  src: "/audio/es-verdad.mp3",
+  src: "audio/es-verdad.mp3",
   /** Duración en segundos. Sólo se usa como fallback del modo simulado. */
   fallbackDuration: 214,
   /** Volumen inicial 0–1. El Konami lo baja a `duckedVolume`. */
@@ -58,6 +60,9 @@ export const audioTrack = {
  *   accent  → "gold" | "rose" | "violet" | "teal"
  *   side    → "left" | "right" (sólo afecta desktop; en mobile es una columna)
  *   media   → { src, alt } o null. Sin media la tarjeta es 100% tipográfica.
+ *             Para una foto propia: ponela en `public/` y referenciala sin
+ *             barra inicial ("fotos/primera.jpg"). Las URLs externas van tal
+ *             cual.
  *   pull    → true convierte la tarjeta en una cita grande, sin caja. Usalo
  *             cada 3–4 tarjetas para romper el ritmo.
  * ----------------------------------------------------------------------- */

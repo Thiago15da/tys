@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useMotionValue } from "framer-motion";
+import { asset } from "./asset";
 
 /**
  * ============================================================================
@@ -50,7 +51,7 @@ export function AudioProvider({ track, children }) {
     audio.loop = true;
     audio.volume = track.volume ?? 0.6;
     audio.crossOrigin = "anonymous";
-    audio.src = track.src;
+    audio.src = asset(track.src);
     audioRef.current = audio;
 
     const onMeta = () => {

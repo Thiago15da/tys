@@ -116,6 +116,71 @@ src/
 
 ---
 
+## Despliegue (GitHub Pages)
+
+Cada push a la rama por defecto compila y publica solo, vía
+`.github/workflows/deploy.yml`. No hay nada que subir a mano.
+
+**Un único paso manual, la primera vez:** en el repo, *Settings → Pages →
+Build and deployment → Source: **GitHub Actions***. El workflow intenta
+activarlo por API (`enablement: true`), así que puede que ya esté hecho; si el
+job "Configurar Pages" falla, es esto lo que falta.
+
+Mientras sea un *project page* el sitio queda en:
+
+    https://thiago15da.github.io/tys/
+
+### Por qué la base es relativa
+
+`vite.config.js` usa `base: './'`. Un *project page* sirve el sitio desde
+`/tys/`, pero en cuanto le conectás un dominio propio pasa a servirse desde la
+raíz. Con rutas relativas **el mismo build funciona en los dos lados**: el día
+del dominio no hay que recompilar ni cambiar configuración.
+
+Esto vale porque es una sola página sin router. Si algún día agregás rutas del
+lado del cliente, hay que volver a una base absoluta y sumar un `404.html` de
+fallback.
+
+Por lo mismo, las rutas de `public/` en `mockData.js` van **sin barra
+inicial** (`"audio/es-verdad.mp3"`, `"fotos/primera.jpg"`): el helper
+`src/lib/asset.js` las resuelve contra la base. Las URLs externas pasan
+intactas.
+
+### Conectar el dominio
+
+1. En tu proveedor de DNS, según qué quieras usar:
+
+   **Dominio raíz** (`tudominio.com`) — cuatro registros `A`:
+
+       185.199.108.153
+       185.199.109.153
+       185.199.110.153
+       185.199.111.153
+
+   Y opcionalmente los `AAAA` para IPv6:
+
+       2606:50c0:8000::153
+       2606:50c0:8001::153
+       2606:50c0:8002::153
+       2606:50c0:8003::153
+
+   **Subdominio** (`www.tudominio.com`) — un `CNAME` apuntando a
+   `thiago15da.github.io`.
+
+2. En *Settings → Pages → Custom domain*, cargá el dominio y guardá.
+
+3. Agregá el dominio en `public/CNAME` (una línea, sólo el dominio, sin
+   `https://`). Con despliegue por Actions el archivo viaja en el artefacto y
+   evita que la configuración se pierda entre publicaciones.
+
+4. Esperá a que verifique el DNS y tildá **Enforce HTTPS**. El certificado
+   puede demorar unos minutos en emitirse.
+
+> La propagación de DNS puede tardar. Si el sitio da 404 justo después de
+> cargar el dominio, casi siempre es eso y no la configuración.
+
+---
+
 ## Decisiones técnicas que conviene no deshacer
 
 **El degradé de los títulos va en el elemento que se anima, nunca en un padre.**
